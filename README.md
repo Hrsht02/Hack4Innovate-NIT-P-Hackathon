@@ -79,16 +79,6 @@ In the era of social media and rising emotional awareness, FeelSpeak introduces 
 
 ---
 
-## 📸 Screenshots
-
-> _Screenshots and demo visuals go here. Add your assets to the `/screenshots` directory and replace image links._
-
-| Text Converter | Voice Transformation | Image Expression Modifier |
-|----------------|----------------------|----------------------------|
-| ![Text Demo](screenshots/text-demo.png) | ![Voice Demo](screenshots/voice-demo.gif) | ![Image Demo](screenshots/image-demo.gif) |
-
----
-
 ## 🔍 Sample Workflow
 
 ### 🔊 Voice to Emotion  
@@ -107,15 +97,24 @@ In the era of social media and rising emotional awareness, FeelSpeak introduces 
 3. Output: Subtly altered face with emotion-specific features
 
 ---
+## 📈 Future Scope
 
-## 📂 Project Structure
+- 🧠 Integrate with mental health assessments for emotional tracking
+- 🌐 Launch as a cross-platform app (Android/iOS/Web)
+- 🛒 Monetize with premium voice filters, emotion packs, and content subscriptions
+- 🔒 Ensure privacy with end-to-end encryption and user-controlled storage
+
+---
+
+## 👥 Team & Credits
+
+> 👨‍💻 Built by a passionate team of engineers, designers, and dreamers  
+> 🤝 Special thanks to open-source contributors and the AI/ML developer community
+
+---
+
+## 📌 How to Run the Project Locally
 
 ```bash
-FeelSpeak/
-├── backend/              # Flask server with APIs for processing
-├── frontend/             # React app for user interface
-├── assets/               # Audio/image demo assets
-├── models/               # Pretrained emotion classifiers and filters
-├── static/               # CSS files and static assets
-├── screenshots/          # UI demo images and GIFs
-└── README.md
+git clone https://github.com/Hrsht02/Hack4Innovate-NIT-P-Hackathon
+cd feelspeak-messenger
