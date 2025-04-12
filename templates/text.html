@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enhanced Funny/Sad Text Converter</title>
+    <style>
+        body { 
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 { 
+            color: #ff6b6b; 
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        textarea { 
+            width: 100%; 
+            height: 100px; 
+            margin: 15px 0; 
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        button { 
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            font-family: inherit;
+        }
+        #funnyBtn {
+            background-color: #ffd166;
+            color: #8a4b08;
+        }
+        #sadBtn {
+            background-color: #a5b1c2;
+            color: #2c3e50;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            min-height: 50px;
+            background-color: #f9f9f9;
+            font-size: 18px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .emoji { 
+            font-size: 1.3em; 
+        }
+        .error {
+            color: #ff4757;
+        }
+        .example {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enhanced Text Converter 🎭</h1>
+        <textarea id="inputText" placeholder="Type something like 'Hello friend, I had a good day at work today!'"></textarea>
+        <div class="example">Try: "I'm happy with my new car and my dog"</div>
+        
+        <div class="btn-group">
+            <button id="funnyBtn" onclick="convert('funny')">Make Hilarious 😂</button>
+            <button id="sadBtn" onclick="convert('sad')">Make Depressing 😢</button>
+        </div>
+        
+        <div id="result">Your enhanced text will appear here...</div>
+    </div>
+
+    <script>
+        async function convert(style) {
+            const text = document.getElementById('inputText').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            if (!text) {
+                resultDiv.innerHTML = '<span class="error">Please enter some text first! ✏️</span>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div>Transforming... <span class="emoji">✨</span></div>';
+            
+            try {
+                const response = await fetch('/convert', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text, style })
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    resultDiv.innerHTML = `<span class="error">${data.error} 😞</span>`;
+                } else {
+                    resultDiv.innerHTML = data.result;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">Something went wrong. Try again! 🌐</span>`;
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
