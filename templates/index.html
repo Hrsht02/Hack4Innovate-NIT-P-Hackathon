@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Voice Modifier Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --danger: #ff7675;
+            --success: #00b894;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--light) 0%, #dfe6e9 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .main-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        
+        .main-card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .effect-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px 5px;
+            text-align: center;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .effect-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .effect-card.active {
+            border-color: var(--primary);
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+        
+        .effect-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .form-range::-webkit-slider-thumb {
+            background: var(--primary);
+        }
+        
+        .form-range::-moz-range-thumb {
+            background: var(--primary);
+        }
+        
+        .form-range::-ms-thumb {
+            background: var(--primary);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 10px 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5649d6;
+            border-color: #5649d6;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+        
+        .audio-container {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .param-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .upload-area {
+            border: 2px dashed #b2bec3;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(108, 92, 231, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #636e72;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .effect-card {
+                margin-bottom: 15px;
+            }
+        }
+        
+      
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .processing {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-microphone-alt me-2"></i>Voice Modifier Pro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-info-circle me-1"></i> About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="main-card p-4 p-md-5">
+                    <h2 class="text-center mb-4">Transform Your Voice</h2>
+                    <p class="text-center text-muted mb-5">Upload your audio file and apply amazing voice effects in seconds</p>
+                    
+                    <!-- Upload Area -->
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h5>Drag & Drop Your Audio File</h5>
+                        <p class="text-muted">or click to browse files (WAV, MP3)</p>
+                        <input type="file" class="file-input" name="audio" id="audioFile" accept=".wav,.mp3" required>
+                    </div>
+                    <div class="mb-4" id="fileNameDisplay" style="display: none;">
+                        <i class="fas fa-file-audio me-2"></i>
+                        <span id="fileName"></span>
+                        <button class="btn btn-sm btn-outline-danger ms-2" id="removeFile">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Effects Selection -->
+                    <div class="mb-4">
+                        <h5 class="mb-3">Select Effect:</h5>
+                        <div class="row">
+                            <div class="col-6 col-md-4 col-lg-2 mb-3">
+                                <div class="effect-card active" data-effect="normal" onclick="selectEffect(this, 'normal')">
+                                    <div class="effect-icon">
+                                        <i class="fas fa-volume-up"></i>
+                                    </div>
+                                    <h6>Normal</h6>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg-2 mb-3">
+                                <div class="effect-card" data-effect="sad" onclick="selectEffect(this, 'sad')">
+                                    <div class="effect-icon">
+                                        <i class="fas fa-sad-tear"></i>
+                                    </div>
+                                    <h6>Sad</h6>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg-2 mb-3">
+                                <div class="effect-card" data-effect="funny" onclick="selectEffect(this, 'funny')">
+                                    <div class="effect-icon">
+                                        <i class="fas fa-laugh-squint"></i>
+                                    </div>
+                                    <h6>Funny</h6>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg-2 mb-3">
+                                <div class="effect-card" data-effect="robot" onclick="selectEffect(this, 'robot')">
+                                    <div class="effect-icon">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <h6>Robot</h6>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg-2 mb-3">
+                                <div class="effect-card" data-effect="enemy" onclick="selectEffect(this, 'enemy')">
+                                    <div class="effect-icon">
+                                        <i class="fas fa-skull"></i>
+                                    </div>
+                                    <h6>Enemy</h6>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg-2 mb-3">
+                                <div class="effect-card" data-effect="alien" onclick="selectEffect(this, 'alien')">
+                                    <div class="effect-icon">
+                                        <i class="fas fa-user-astronaut"></i>
+                                    </div>
+                                    <h6>Alien</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="effect" id="effect" value="normal">
+                    </div>
+                    
+                    
+                    <div class="mb-4">
+                        <h5 class="mb-3">Fine Tuning</h5>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Pitch Adjustment: <span class="param-value" id="pitchValue">0</span> semitones</label>
+                            <input type="range" class="form-range" name="pitch" min="-12" max="12" step="1" value="0">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Speed: <span class="param-value" id="speedValue">1.0</span>x</label>
+                            <input type="range" class="form-range" name="speed" min="0.5" max="2" step="0.1" value="1.0">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Echo Strength: <span class="param-value" id="echoValue">0</span></label>
+                            <input type="range" class="form-range" name="echo" min="0" max="1" step="0.1" value="0">
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-primary btn-lg" id="processBtn">
+                            <i class="fas fa-magic me-2"></i> Process Audio
+                        </button>
+                    </div>
+                    
+                    
+                    <div class="audio-container mt-4" id="resultsSection" style="display: none;">
+                        <h5 class="mb-3"><i class="fas fa-headphones me-2"></i> Your Modified Audio</h5>
+                        <audio id="audio-preview" controls class="w-100"></audio>
+                        <div class="d-grid gap-2 mt-3">
+                            <a id="downloadBtn" class="btn btn-success">
+                                <i class="fas fa-download me-2"></i> Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Voice Modifier Pro | Made by @Mantu</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // DOM 
+        const uploadArea = document.getElementById('uploadArea');
+        const audioFileInput = document.getElementById('audioFile');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const fileName = document.getElementById('fileName');
+        const removeFileBtn = document.getElementById('removeFile');
+        const processBtn = document.getElementById('processBtn');
+        const resultsSection = document.getElementById('resultsSection');
+        const audioPreview = document.getElementById('audio-preview');
+        const downloadBtn = document.getElementById('downloadBtn');
+        
+       
+        document.querySelectorAll('.form-range').forEach(slider => {
+            const valueDisplay = document.getElementById(`${slider.name}Value`);
+            valueDisplay.textContent = slider.value;
+            
+            slider.addEventListener('input', (e) => {
+                valueDisplay.textContent = e.target.value;
+            });
+        });
+        
+      
+        uploadArea.addEventListener('click', () => {
+            audioFileInput.click();
+        });
+        
+        audioFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileName.textContent = e.target.files[0].name;
+                fileNameDisplay.style.display = 'block';
+                uploadArea.style.display = 'none';
+            }
+        });
+        
+        removeFileBtn.addEventListener('click', () => {
+            audioFileInput.value = '';
+            fileNameDisplay.style.display = 'none';
+            uploadArea.style.display = 'block';
+            resultsSection.style.display = 'none';
+        });
+        
+       
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--primary)';
+            uploadArea.style.backgroundColor = 'rgba(108, 92, 231, 0.1)';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#b2bec3';
+            uploadArea.style.backgroundColor = 'transparent';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#b2bec3';
+            uploadArea.style.backgroundColor = 'transparent';
+            
+            if (e.dataTransfer.files.length > 0) {
+                audioFileInput.files = e.dataTransfer.files;
+                fileName.textContent = e.dataTransfer.files[0].name;
+                fileNameDisplay.style.display = 'block';
+                uploadArea.style.display = 'none';
+            }
+        });
+        
+       
+        function selectEffect(element, effect) {
+            document.querySelectorAll('.effect-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            element.classList.add('active');
+            document.getElementById('effect').value = effect;
+        }
+        
+       
+        processBtn.addEventListener('click', async () => {
+            if (!audioFileInput.files.length) {
+                alert('Please select an audio file first!');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('audio', audioFileInput.files[0]);
+            formData.append('effect', document.getElementById('effect').value);
+            formData.append('pitch', document.querySelector('[name="pitch"]').value);
+            formData.append('speed', document.querySelector('[name="speed"]').value);
+            formData.append('echo', document.querySelector('[name="echo"]').value);
+            
+            
+            processBtn.disabled = true;
+            processBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Processing...';
+            processBtn.classList.add('processing');
+            
+            try {
+                const response = await fetch('/modify', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    audioPreview.src = result.output_file + '?t=' + new Date().getTime();
+                    downloadBtn.href = result.output_file;
+                    resultsSection.style.display = 'block';
+                    
+                    
+                    resultsSection.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    alert('Error processing audio. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            } finally {
+                processBtn.disabled = false;
+                processBtn.innerHTML = '<i class="fas fa-magic me-2"></i> Process Audio';
+                processBtn.classList.remove('processing');
+            }
+        });
+    </script>
+</body>
+</html>
