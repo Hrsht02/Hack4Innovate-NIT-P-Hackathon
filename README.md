@@ -60,8 +60,10 @@ In the era of social media and rising emotional awareness, FeelSpeak introduces 
 ## 🧪 Prototype Preview
 
 📌 _This section shows how the platform works visually._
+     Messenger Platform 
 
-> 🔗 **[Link to Figma Prototype / Screenshots Folder]**  
+> 🔗 **![messenger Preview](screenshots/messenger_platform.png)**
+**  
 > *(Add your figma design, UI mockups, or user journey flow)*
 
 ---
@@ -74,7 +76,7 @@ In the era of social media and rising emotional awareness, FeelSpeak introduces 
 - **Text Message** → **Professional Tone Voice Output**  
 - **Voice Sample** → **Robot / Alien / Funny Tone**
 
-> 🔗 **[Link to Output Voice Folder or Audio Demos]**
+> 🔗 **![Voice to Voice Preview](screenshots/voice-to-voice.png)**
 
 ---
 
@@ -86,9 +88,21 @@ In the era of social media and rising emotional awareness, FeelSpeak introduces 
 - Normal → Angry (Cartoon Style)  
 - Smiling → Sad (Animated Effect)
 
-> 🔗 **[Link to Image Output Folder / Screenshots]**
+> 🔗 **![Image to Image Preview](screenshots/image-to-animinated.png)**
 
 ---
+💬 Text Emotion Showcase
+✍️ Text transformation based on selected tone:
+
+Formal → Friendly
+
+Serious → Funny (With Emojis 😄🎉)
+
+Neutral → Sad (Emotional Touch 😢💔)
+> 🔗 **![Text to Text Preview](screenshots/text-to-text.png)**
+
+---
+
 
 ## 📈 Future Scope
 
