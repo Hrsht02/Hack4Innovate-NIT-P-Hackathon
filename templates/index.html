@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feel Speak - Emotion Converter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="header-content">
+                <i class="fas fa-magic"></i>
+                <span>Feel Speak - Emotion Converter</span>
+            </div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message message-bot">
+                <div class="message-bubble bot-bubble">
+                    Welcome to Feel Speak! Send me text, voice, or images and I'll convert them to match your chosen emotion.
+                </div>
+                <div class="message-time">Just now</div>
+            </div>
+        </div>
+        
+        <div class="input-tools">
+            <ul class="nav nav-tabs" id="inputTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="text-tab" data-bs-toggle="tab" data-bs-target="#text-tab-pane" type="button">
+                        <i class="fas fa-keyboard"></i> Text
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="voice-tab" data-bs-toggle="tab" data-bs-target="#voice-tab-pane" type="button">
+                        <i class="fas fa-microphone"></i> Voice
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#image-tab-pane" type="button">
+                        <i class="fas fa-image"></i> Image
+                    </button>
+                </li>
+            </ul>
+            
+            <div class="effect-options">
+                <span class="effect-option active" data-effect="happy">😊 Happy</span>
+                <span class="effect-option" data-effect="sad">😢 Sad</span>
+                <span class="effect-option" data-effect="funny">😂 Funny</span>
+                <span class="effect-option" data-effect="angry">😠 Angry</span>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="inputTabContent">
+            <div class="tab-pane fade show active" id="text-tab-pane" role="tabpanel">
+                <div class="input-area">
+                    <textarea class="form-control" id="textInput" rows="1" placeholder="Type a message..."></textarea>
+                    <button class="btn btn-primary ms-2" id="sendTextBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="voice-tab-pane" role="tabpanel">
+                <div class="input-area">
+                    <button class="btn btn-outline-primary me-2" id="recordBtn">
+                        <i class="fas fa-microphone"></i> Record
+                    </button>
+                    <input type="file" id="audioUpload" accept="audio/*" style="display: none;">
+                    <button class="btn btn-outline-secondary me-2" id="uploadAudioBtn">
+                        <i class="fas fa-upload"></i> Upload
+                    </button>
+                    <div class="audio-visualizer" id="audioVisualizer" style="display: none;">
+                        <canvas id="audioWaveform"></canvas>
+                    </div>
+                    <button class="btn btn-primary ms-auto" id="sendAudioBtn" disabled>
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="image-tab-pane" role="tabpanel">
+                <div class="input-area">
+                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                    <button class="btn btn-outline-primary me-2" id="uploadImageBtn">
+                        <i class="fas fa-image"></i> Upload Image
+                    </button>
+                    <div class="preview-container" id="imagePreviewContainer" style="display: none;">
+                        <img src="" class="preview-image" id="imagePreview">
+                    </div>
+                    <button class="btn btn-primary ms-auto" id="sendImageBtn" disabled>
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/app.js"></script>
+</body>
+</html>
